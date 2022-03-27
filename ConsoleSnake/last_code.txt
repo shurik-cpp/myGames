@@ -1,0 +1,47 @@
+COMPILING: gcc main.cpp -lncurses
+
+void Draw() {
+  system("clear"); // system("clr"); - для консоли винды
+	for (int i = 0; i < height; ++i) {
+	  if (i == 0 || i == height - 1) { // рисуем верхнюю и нижнюю границы
+		  for (int j = 0; j < width; ++j) {
+			  cout << '#';
+			}
+			cout << '\n';
+		}
+		else {
+		  for (int j = 0; j < width; ++j) {
+			  if (j == 0 || j == width - 1) cout << '#';
+				else if (j == snake.pos_x && i == snake.pos_y) { // рисуем голову
+				  cout << snake.head;
+				}
+				else if (j == fruit.pos_x && i == fruit.pos_y) { // рисуем фрукт
+				  cout << fruit.f;
+				}
+				else {
+				  cout << ' ';
+				}
+			}
+			cout << '\n';
+		}
+	}
+	cout << endl;
+}
+
+
+switch (dir){
+  case LEFT:
+	  mesg = "LEFT";
+	break;
+	case RIGHT:
+	  mesg = "RIGHT";
+	break;
+	case UP:
+	  mesg = "UP";
+	break;
+	case DOWN:
+	  mesg = "DOWN";
+	break;
+	default:
+	break;
+}

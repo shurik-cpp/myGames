@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+1b5f027837167664f192a8847ae4d136 CMakeFiles/SYNC_RESOURCE-CowRunner_cocos

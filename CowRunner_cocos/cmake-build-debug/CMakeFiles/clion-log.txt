@@ -1,0 +1,48 @@
+/app/extra/clion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/app/extra/clion/bin/ninja/linux/ninja -G Ninja /home/shurik/myCodes/myGames/CowRunner_cocos
+-- The C compiler identification is GNU 11.2.0
+-- The CXX compiler identification is GNU 11.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- PROJECT_NAME:CowRunner_cocos
+-- PROJECT_SOURCE_DIR:/home/shurik/myCodes/myGames/CowRunner_cocos
+-- COCOS2DX_ROOT_PATH:/home/shurik/myCodes/myGames/CowRunner_cocos/cocos2d
+-- CMAKE_MODULE_PATH:/home/shurik/myCodes/myGames/CowRunner_cocos/cocos2d/cmake/Modules/
+-- PROJECT_BINARY_DIR:/home/shurik/myCodes/myGames/CowRunner_cocos/cmake-build-debug
+-- ENGINE_BINARY_PATH:/home/shurik/myCodes/myGames/CowRunner_cocos/cmake-build-debug/engine
+-- PYTHON_PATH:/usr/bin/python
+-- COCOS_COMMAND_PATH:COCOS_COMMAND-NOTFOUND
+-- HOST_SYSTEM:Linux
+-- CMAKE_GENERATOR: Ninja
+-- LUAJIT32_COMMAND:
+-- LUAJIT64_COMMAND:
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.0") 
+-- Checking for one of the modules 'fontconfig'
+-- Found Fontconfig: TRUE (found version "2.13.1") 
+-- Fontconfig include dirs: /usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz;/usr/include/glib-2.0;/usr/lib/x86_64-linux-gnu/glib-2.0/include
+-- Found GTK3: gtk-3;gdk-3;pangocairo-1.0;pango-1.0;harfbuzz;atk-1.0;cairo-gobject;cairo;gdk_pixbuf-2.0;gio-2.0;gobject-2.0;glib-2.0  
+-- GTK3 include dirs: /usr/include/gtk-3.0;/usr/include/pango-1.0;/usr/include/glib-2.0;/usr/lib/x86_64-linux-gnu/glib-2.0/include;/usr/include/harfbuzz;/usr/include/freetype2;/usr/include/libpng16;/usr/include/libmount;/usr/include/blkid;/usr/include/fribidi;/usr/include/cairo;/usr/include/pixman-1;/usr/include/gdk-pixbuf-2.0;/usr/include/gio-unix-2.0;/usr/include/atk-1.0;/usr/include/at-spi2-atk/2.0;/usr/include/dbus-1.0;/usr/lib/x86_64-linux-gnu/dbus-1.0/include;/usr/include/at-spi-2.0
+-- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.2.11") 
+-- ZLIB include dirs: /usr/include
+-- Found PNG: /usr/lib/x86_64-linux-gnu/libpng.so (found version "1.6.37") 
+-- PNG include dirs: /usr/include;/usr/include
+CMake Error at /app/extra/clion/bin/cmake/linux/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
+  Could NOT find GLEW (missing: GLEW_INCLUDE_DIRS GLEW_LIBRARIES)
+Call Stack (most recent call first):
+  /app/extra/clion/bin/cmake/linux/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake:594 (_FPHSA_FAILURE_MESSAGE)
+  /app/extra/clion/bin/cmake/linux/share/cmake-3.21/Modules/FindGLEW.cmake:215 (find_package_handle_standard_args)
+  cocos2d/cmake/Modules/CocosBuildHelpers.cmake:294 (find_package)
+  cocos2d/cmake/Modules/CocosConfigDepend.cmake:15 (cocos_find_package)
+  cocos2d/cmake/Modules/CocosConfigDepend.cmake:92 (cocos2dx_depend)
+  cocos2d/cocos/CMakeLists.txt:117 (use_cocos2dx_libs_depend)
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/shurik/myCodes/myGames/CowRunner_cocos/cmake-build-debug/CMakeFiles/CMakeOutput.log".
