@@ -9,9 +9,6 @@ std::string BuildErrorMsg(const std::string file_name) {
 	return "File " + file_name + " not found";
 }
 
-Scene* GameScene::createScene() {
-	return GameScene::create();
-}
 
 GameScene::~GameScene() {
 	CC_SAFE_DELETE(mapLayer);
@@ -26,28 +23,33 @@ TMXTiledMap* GameScene::BuildMapLayer(int level) {
 	if (map == nullptr) {
 		throw std::invalid_argument(BuildErrorMsg(ss.str()));
 	}
+	shapeCache->createBodyWithName("ground");
 	return map;
 }
 
 Sprite* GameScene::BuildSprite(const UnitType type) {
 	Sprite* sprite = nullptr;
-	std::stringstream ss("'unit-");
+	std::stringstream ss; //("'unit-");
+	std::string name;
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	switch (type) {
 		case UnitType::COW:
-			ss << "cow'.png";
-			sprite = Sprite::create();
+			ss << "collection-cartoon-cow-images-2.png";
+			name = "cow_stay_1";
+			sprite = Sprite::create(ss.str());
 		break;
 		case UnitType::APPLE:
 			ss.flush();
 			ss << "apple.png";
-			sprite = Sprite::create("apple.png");
+			name = "apple";
+			sprite = Sprite::create(ss.str());
 		break;
 		case UnitType::ENEMY:
-			ss << "enemy'.png";
-			sprite = Sprite::create();
+			ss << "enemy.png";
+			name = "enemy";
+			sprite = Sprite::create(ss.str());
 		break;
 	}
 
@@ -56,19 +58,19 @@ Sprite* GameScene::BuildSprite(const UnitType type) {
 	}
 
 	if (type == UnitType::COW) {
-		auto cow_stay_anim = Animation::create();
-		// load image file from local file system to CCSpriteFrame, then add into CCAnimation
-		for (int i = 1; i <= 6; ++i) {
-			std::stringstream file_name;
-			file_name << "cow_stay_" << i << ".png";
-			cow_stay_anim->addSpriteFrameWithFile(file_name.str());
-		}
-		cow_stay_anim->setDelayPerUnit(0.2f);
-		cow_stay_anim->setLoops(CC_REPEAT_FOREVER);
+//		auto cow_stay_anim = Animation::create();
+//		// load image file from local file system to CCSpriteFrame, then add into CCAnimation
+//		for (int i = 1; i <= 6; ++i) {
+//			std::stringstream file_name;
+//			file_name << "cow_stay_" << i << ".png";
+//			cow_stay_anim->addSpriteFrameWithFile(file_name.str());
+//		}
+//		cow_stay_anim->setDelayPerUnit(0.2f);
+//		cow_stay_anim->setLoops(CC_REPEAT_FOREVER);
 
-		Animate* action = Animate::create(cow_stay_anim);
-		// run action on sprite object
-		sprite->runAction(action);
+//		Animate* action = Animate::create(cow_stay_anim);
+//		// run action on sprite object
+//		sprite->runAction(action);
 
 		sprite->setPosition(Vec2(visibleSize.height / 2, visibleSize.width / 2));
 	}
@@ -77,21 +79,34 @@ Sprite* GameScene::BuildSprite(const UnitType type) {
 														 std::rand() % static_cast<int>(visibleSize.width)));
 	}
 
+	// attach physics body
+	shapeCache->setBodyOnSprite(name, sprite);
+
 	return sprite;
 }
 
 void GameScene::update(float dt) {
 
 	//this->GameLogic();
-	Point gravity = Vec2(0.0, -9.8);
-//	Point gravityStep = Mult(gravity, dt);
 
-//	self.velocity = ccpAdd(self.velocity, gravityStep);
-//	CGPoint stepVelocity = ccpMult(self.velocity, dt);
+}
 
-//	// 5
-//	self.position = ccpAdd(self.position, stepVelocity);
+Scene* GameScene::createScene() {
 
+	// create the scene with physics enabled
+	auto scene = Scene::createWithPhysics();
+
+	// set gravity
+	scene->getPhysicsWorld()->setGravity(Vec2(0, -9.8));
+
+	// optional: set debug draw
+	scene->getPhysicsWorld()->setDebugDrawMask(0xffff);
+
+	// Создаём слой
+	auto layer = GameScene::create();
+	scene->addChild(layer);
+
+	return scene;
 }
 
 // on "init" you need to initialize your instance
@@ -102,7 +117,12 @@ bool GameScene::init() {
 	}
 
 	try {
-		LayerColor* blueSky = LayerColor::create(Color4B::BLACK);
+		// Load shapes
+		shapeCache = PhysicsShapeCache::getInstance();
+		shapeCache->addShapesWithFile("physics.plist");
+
+
+		LayerColor* blueSky = LayerColor::create(Color4B::BLUE);
 		this->addChild(blueSky, LayerType::BACKGROUND);
 
 		mapLayer = BuildMapLayer(currentLevel);
@@ -111,8 +131,10 @@ bool GameScene::init() {
 		cow_sprite = BuildSprite(UnitType::COW);
 		mapLayer->addChild(cow_sprite, LayerType::SPRITES);
 
-		auto fruit_sprite = BuildSprite(UnitType::APPLE);
-		mapLayer->addChild(fruit_sprite, LayerType::SPRITES);
+
+
+//		auto fruit_sprite = BuildSprite(UnitType::APPLE);
+//		mapLayer->addChild(fruit_sprite, LayerType::SPRITES);
 
 	}
 	catch (std::invalid_argument& ex) {

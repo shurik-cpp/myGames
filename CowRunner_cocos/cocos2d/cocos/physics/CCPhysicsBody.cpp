@@ -51,7 +51,7 @@ static void internalBodyUpdateVelocity(cpBody *body, cpVect gravity, cpFloat dam
     // Skip kinematic bodies.
     if(cpBodyGetType(body) == CP_BODY_TYPE_KINEMATIC) return;
     
-    cpAssertSoft(body->m > 0.0f && body->i > 0.0f, "Body's mass and moment must be positive to simulate. (Mass: %f Moment: f)", body->m, body->i);
+		cpAssertSoft(body->m > 0.0f && body->i > 0.0f, "Body's mass and moment must be positive to simulate. (Mass: %f Moment: %f)", body->m, body->i);
     
     cocos2d::PhysicsBody *physicsBody = static_cast<cocos2d::PhysicsBody*>(body->userData);
     

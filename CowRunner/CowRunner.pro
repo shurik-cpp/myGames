@@ -7,4 +7,8 @@ INCLUDEPATH += /path/to/ncurses/headers/
 LIBS += -L/path/to/ncurses/library/ -lncurses
 
 SOURCES += \
-	cow_runner.cpp
+	CowRunner.cpp \
+	main.cpp
+
+HEADERS += \
+	CowRunner.h
