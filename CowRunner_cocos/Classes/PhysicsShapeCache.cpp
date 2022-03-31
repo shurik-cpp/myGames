@@ -237,9 +237,6 @@ bool PhysicsShapeCache::setBodyOnSprite(const std::string &name, Sprite *sprite)
 	PhysicsBody *body = createBodyWithName(name);
 	if (body)
 	{
-		body->addMass(100.0);
-		body->addMoment(50.0);
-		body->setMoment(50.0);
 		sprite->setPhysicsBody(body);
 		sprite->setAnchorPoint(getBodyDef(name)->anchorPoint);
 	}
