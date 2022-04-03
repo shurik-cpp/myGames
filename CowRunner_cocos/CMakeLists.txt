@@ -60,7 +60,6 @@ list(APPEND GAME_SOURCE
 		 Classes/StartMenuScene.cpp
 		 Classes/PauseScene.cpp
 		 Classes/GameScene.cpp
-		 Classes/PhysicsShapeCache.cpp
 
      )
 list(APPEND GAME_HEADER
@@ -68,7 +67,6 @@ list(APPEND GAME_HEADER
 		 Classes/StartMenuScene.h
 		 Classes/PauseScene.h
 		 Classes/GameScene.h
-		 Classes/PhysicsShapeCache.h
 
      )
 

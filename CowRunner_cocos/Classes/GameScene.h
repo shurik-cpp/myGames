@@ -5,8 +5,6 @@
 #include <random>
 
 #include "cocos2d.h"
-#include "PhysicsShapeCache.h"
-
 #include "StartMenuScene.h"
 
 
@@ -45,15 +43,14 @@ private:
 	};
 
 	int currentLevel = 2;
+	cocos2d::EventListenerKeyboard* listener = nullptr;
 	cocos2d::TMXTiledMap* mapLayer = nullptr;
 	cocos2d::Sprite* cow_sprite = nullptr;
-	PhysicsShapeCache* shapeCache = nullptr;
-
 
 	cocos2d::TMXTiledMap* BuildMapLayer(int level);
 	cocos2d::Sprite* BuildSprite(const UnitType type);
 
-	virtual void update(float dt);
+	virtual void update(float delta);
 
 };
 
