@@ -119,13 +119,13 @@ bool GameScene::init() {
 				case EventKeyboard::KeyCode::KEY_A:
 					std::cout << "Pressed LEFT key\n";
 					cow.setDirection(UnitDirection::LEFT);
-					cow.setState(UnitState::WALK);
+					isKeyLeft = true;
 				break;
 				case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 				case EventKeyboard::KeyCode::KEY_D:
 					std::cout << "Pressed RIGHT key\n";
 					cow.setDirection(UnitDirection::RIGHT);
-					cow.setState(UnitState::WALK);
+					isKeyRight = true;
 				break;
 				case EventKeyboard::KeyCode::KEY_UP_ARROW:
 				case EventKeyboard::KeyCode::KEY_W:
@@ -150,10 +150,13 @@ bool GameScene::init() {
 			switch(keyCode){
 				case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 				case EventKeyboard::KeyCode::KEY_A:
+					std::cout << "Released LEFT key\n";
+					isKeyLeft = false;
+				break;
 				case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 				case EventKeyboard::KeyCode::KEY_D:
-					std::cout << "Released LEFT or RIGHT key\n";
-					cow.setState(UnitState::STOP);
+					std::cout << "Released RIGHT key\n";
+					isKeyRight = false;
 				break;
 				case EventKeyboard::KeyCode::KEY_UP_ARROW:
 				case EventKeyboard::KeyCode::KEY_W:
@@ -186,15 +189,28 @@ void GameScene::update(float delta) {
 //	Size visibleSize = Director::getInstance()->getVisibleSize();
 //	const float gravity = 9.8;
 
-	if (cow.getState() == UnitState::WALK) {
-		if (cow.getDirection() == UnitDirection::LEFT) {
-			cow.getSprite()->setFlippedX(true);
-			cow.getSprite()->setPositionX(cow.getSprite()->getPositionX() - 10);
-		} else {
-			cow.getSprite()->setFlippedX(false);
-			cow.getSprite()->setPositionX(cow.getSprite()->getPositionX() + 10);
-		}
+	if ((!isKeyLeft && !isKeyRight)) {
+		cow.setState(UnitState::STOP);
+	} else {
+		cow.setState(UnitState::WALK);
 	}
+
+	if (cow.getState() == UnitState::WALK) {
+		const float SPEED = 10;
+		float cow_speed = 0;
+		if (isKeyLeft && isKeyRight) {
+			// TODO корова мычит и воспроизводится анимация недовольной коровы (встает на дыбы? :D)
+		}	else if (isKeyLeft) {
+			cow.getSprite()->setFlippedX(true);
+			cow_speed -= SPEED;
+		} else if (isKeyRight) {
+			cow.getSprite()->setFlippedX(false);
+			cow_speed += SPEED;
+		}
+
+		cow.getSprite()->setPositionX(cow.getSprite()->getPositionX() + cow_speed);
+	}
+
 
 	const float cow_posY = cow.getSprite()->getPositionY();
 	const float MAX_JUMP_ACCELERATION = 20;

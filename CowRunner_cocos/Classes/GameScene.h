@@ -56,6 +56,8 @@ public:
 
 	virtual bool init();
 
+	virtual void update(float delta);
+
 	// implement the "static create()" method manually
 	CREATE_FUNC(GameScene);
 
@@ -84,7 +86,9 @@ private:
 	cocos2d::TMXTiledMap* BuildMapLayer(int level);
 	cocos2d::Sprite* BuildSprite(const UnitType type);
 
-	virtual void update(float delta);
+	bool isKeyLeft = false;
+	bool isKeyRight = false;
+
 
 };
 
