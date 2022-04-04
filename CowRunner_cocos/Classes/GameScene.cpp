@@ -36,15 +36,15 @@ Sprite* GameScene::BuildSprite(const UnitType type) {
 			sprite = Sprite::create(ss.str());
 		break;
 		case UnitType::APPLE:
-			ss.flush();
-			ss << "apple.png";
-			name = "apple";
-			sprite = Sprite::create(ss.str());
+//			ss.flush();
+//			ss << "apple.png";
+//			name = "apple";
+//			sprite = Sprite::create(ss.str());
 		break;
 		case UnitType::ENEMY:
-			ss << "enemy.png";
-			name = "enemy";
-			sprite = Sprite::create(ss.str());
+//			ss << "enemy.png";
+//			name = "enemy";
+//			sprite = Sprite::create(ss.str());
 		break;
 	}
 
@@ -81,7 +81,7 @@ Sprite* GameScene::BuildSprite(const UnitType type) {
 Scene* GameScene::createScene() {
 
 	// create the scene with physics enabled
-	auto scene = Scene::createWithPhysics();
+	auto scene = Scene::create();
 
 	// Создаём слой
 	auto layer = GameScene::create();
@@ -105,49 +105,70 @@ bool GameScene::init() {
 		mapLayer = BuildMapLayer(currentLevel);
 		//this->addChild(mapLayer, LayerType::MAP);
 
-		cow_sprite = BuildSprite(UnitType::COW);
-		this->addChild(cow_sprite, LayerType::SPRITES);
+		cow.setSprite(BuildSprite(UnitType::COW));
+		this->addChild(cow.getSprite(), LayerType::SPRITES);
 
 		//		auto fruit_sprite = BuildSprite(UnitType::APPLE);
 		//		mapLayer->addChild(fruit_sprite, LayerType::SPRITES);
 
 		// creating a keyboard event listener
-		listener = EventListenerKeyboard::create();
-		listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event) {
-			Vec2 cow_pos = event->getCurrentTarget()->getPosition();
-			//auto cow_pos = event->getCurrentTarget()
-			//auto move = MoveBy::create(2.0, Vec2(cow_pos.x - 10, cow_pos.y));
-
+		eventListener = EventListenerKeyboard::create();
+		eventListener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
 			switch(keyCode){
 				case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 				case EventKeyboard::KeyCode::KEY_A:
 					std::cout << "Pressed LEFT key\n";
-					//event->getCurrentTarget()->setPosition(loc.x, loc.y);
-					cow_pos.x -= 50;
-					//event->getCurrentTarget()->runAction(move);
-					event->getCurrentTarget()->setPosition(cow_pos.x, cow_pos.y);
+					cow.setDirection(UnitDirection::LEFT);
+					cow.setState(UnitState::WALK);
 				break;
 				case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 				case EventKeyboard::KeyCode::KEY_D:
 					std::cout << "Pressed RIGHT key\n";
-					cow_pos.x += 50;
-					event->getCurrentTarget()->setPosition(cow_pos.x, cow_pos.y);
+					cow.setDirection(UnitDirection::RIGHT);
+					cow.setState(UnitState::WALK);
 				break;
 				case EventKeyboard::KeyCode::KEY_UP_ARROW:
 				case EventKeyboard::KeyCode::KEY_W:
 					std::cout << "Pressed UP key\n";
-					cow_pos.y += 100;
-					event->getCurrentTarget()->setPosition(cow_pos.x, cow_pos.y);
+					if (cow.getJumpStatus() == UnitJumpStatus::ON_LAND) {
+						cow.setJumpStatus(UnitJumpStatus::UP);
+					}
 				break;
 				case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 				case EventKeyboard::KeyCode::KEY_S:
 					std::cout << "Pressed DOWN key\n";
-					cow_pos.y -= 10;
-					event->getCurrentTarget()->setPosition(cow_pos.x, cow_pos.y);
+					auto jump_status = cow.getJumpStatus();
+					if (jump_status != UnitJumpStatus::DOWN) {
+						cow.setJumpStatus(UnitJumpStatus::DOWN);
+					}
+
 				break;
 			}
 		};
-		this->_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, cow_sprite);
+
+		eventListener->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event) {
+			switch(keyCode){
+				case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+				case EventKeyboard::KeyCode::KEY_A:
+				case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+				case EventKeyboard::KeyCode::KEY_D:
+					std::cout << "Released LEFT or RIGHT key\n";
+					cow.setState(UnitState::STOP);
+				break;
+				case EventKeyboard::KeyCode::KEY_UP_ARROW:
+				case EventKeyboard::KeyCode::KEY_W:
+					std::cout << "Released UP key\n";
+
+				break;
+				case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+				case EventKeyboard::KeyCode::KEY_S:
+					std::cout << "Released DOWN key\n";
+
+				break;
+			}
+		};
+
+		this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, cow.getSprite());
 
 		// Запускаем игровой цикл
 		// Как только игровой цикл открывается, он вызывает функцию GameScene::update(float dt)
@@ -164,11 +185,49 @@ bool GameScene::init() {
 void GameScene::update(float delta) {
 //	Size visibleSize = Director::getInstance()->getVisibleSize();
 //	const float gravity = 9.8;
-	const float cow_posY = cow_sprite->getPositionY();
 
-	if (cow_posY >= cow_sprite->getContentSize().height / 2) {
-		cow_sprite->setPositionY(cow_posY - 1);
+	if (cow.getState() == UnitState::WALK) {
+		if (cow.getDirection() == UnitDirection::LEFT) {
+			cow.getSprite()->setFlippedX(true);
+			cow.getSprite()->setPositionX(cow.getSprite()->getPositionX() - 10);
+		} else {
+			cow.getSprite()->setFlippedX(false);
+			cow.getSprite()->setPositionX(cow.getSprite()->getPositionX() + 10);
+		}
 	}
+
+	const float cow_posY = cow.getSprite()->getPositionY();
+	const float MAX_JUMP_ACCELERATION = 20;
+	const float ACCEL_DELTA = 0.7;
+	static float jump_acceleration = 0;
+
+	if (cow.getJumpStatus() == UnitJumpStatus::UP) {
+		jump_acceleration = MAX_JUMP_ACCELERATION;
+		cow.setJumpStatus(UnitJumpStatus::FLY);
+	}
+	else if (cow.getJumpStatus() == UnitJumpStatus::FLY) {
+		if (jump_acceleration > 0) {
+			cow.getSprite()->setPositionY(cow_posY + jump_acceleration);
+			jump_acceleration -= ACCEL_DELTA;
+		} else {
+			cow.setJumpStatus(UnitJumpStatus::DOWN);
+			jump_acceleration = 0;
+		}
+	}
+	else if (cow.getJumpStatus() == UnitJumpStatus::DOWN) {
+		if (cow_posY >= cow.getSprite()->getContentSize().height / 2) {
+			cow.getSprite()->setPositionY(cow_posY - jump_acceleration);
+			if (jump_acceleration < MAX_JUMP_ACCELERATION) {
+				jump_acceleration += ACCEL_DELTA;
+			}
+		}
+		else {
+			cow.getSprite()->setPositionY(cow.getSprite()->getContentSize().height / 2);
+			cow.setJumpStatus(UnitJumpStatus::ON_LAND);
+			jump_acceleration = 0;
+		}
+	}
+
 
 	//this->GameLogic();
 
