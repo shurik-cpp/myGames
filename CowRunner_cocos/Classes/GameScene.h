@@ -27,20 +27,19 @@ enum UnitJumpStatus {
 
 class GameUnit {
 public:
-	GameUnit() {}
+	explicit GameUnit() {}
 	~GameUnit() { CC_SAFE_DELETE(sprite); }
 
 	cocos2d::Sprite* getSprite() { return sprite; }
 	void setSprite(cocos2d::Sprite* s) {
-//		CC_SAFE_DELETE(sprite);
 		sprite = s;
 	}
-	void setDirection(UnitDirection dir) { direction = dir; }
-	UnitDirection getDirection() { return direction; }
-	void setState(UnitState st) { state = st; }
-	UnitState getState() { return state; }
-	void setJumpStatus(UnitJumpStatus js) { jump = js; }
-	UnitJumpStatus getJumpStatus() { return jump; }
+	void setDirection(const UnitDirection dir) { direction = dir; }
+	UnitDirection getDirection() const { return direction; }
+	void setState(const UnitState st) { state = st; }
+	UnitState getState() const { return state; }
+	void setJumpStatus(const UnitJumpStatus js) { jump = js; }
+	UnitJumpStatus getJumpStatus() const { return jump; }
 
 private:
 	cocos2d::Sprite* sprite = nullptr;
@@ -67,7 +66,8 @@ private:
 	enum LayerType {
 		BACKGROUND = -1,
 		MAP,
-		SPRITES
+		SPRITES,
+		FRONT
 	};
 
 	enum UnitType {
@@ -88,6 +88,7 @@ private:
 
 	bool isKeyLeft = false;
 	bool isKeyRight = false;
+	bool isUpKey = false;
 
 
 };

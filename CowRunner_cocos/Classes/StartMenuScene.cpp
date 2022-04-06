@@ -36,54 +36,81 @@ bool StartMenuScene::init()
 	}
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	//Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	// задаем фон для меню
-//	DrawNode* background = DrawNode::create();
-//	background->drawSolidRect(origin, visibleSize, Color4F(0.6, 0.6, 0.6, 1.0));
-//	this->addChild(background);
+	Color4B blueSkyColor(Color3B(184, 237, 255));
+	LayerColor* backgroundLayer = LayerColor::create(blueSkyColor);
+	this->addChild(backgroundLayer, -1);
+
+	const Vec2 grass_pos(-50, 0);
+	const Vec2 grass_anchor(0, 0);
+	const std::pair<float, float> sprites_scale = {0.3, 0.3};
+	Sprite* grass_back = Sprite::create("res/world/grass_back.png");
+	grass_back->setScale(sprites_scale.first, sprites_scale.second);
+	grass_back->setAnchorPoint(grass_anchor);
+	grass_back->setPosition(grass_pos);
+	this->addChild(grass_back, -1);
+
+	Sprite* grass_front = Sprite::create("res/world/grass_front.png");
+	grass_front->setScale(sprites_scale.first, sprites_scale.second);
+	grass_front->setAnchorPoint(grass_anchor);
+	grass_front->setPosition(grass_pos);
+	this->addChild(grass_front, 2);
+
 
 	// add "Cow splash screen"
-//	Sprite* cow_sprite = Sprite::create("cow_stay_1.png");//, Rect(11, 107, 133, 99));
-//	Size cow_sprite_size = cow_sprite->getContentSize();
-//	if (cow_sprite) {
-//		// position the sprite on the center of the screen
-//		cow_sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, cow_sprite_size.height / 2));
+	Sprite* cow_sprite = Sprite::create();
 
-//		// add the sprite as a child to this layer
-//		this->addChild(cow_sprite, 0);
-//	}
-//	else {
-//		problemLoading("'cow_stay_1.png'");
-//	}
+	// position the sprite on the center of the screen
+	cow_sprite->setScale(0.9, 0.9);
+	cow_sprite->setAnchorPoint(Vec2(0.5, 0));
+	cow_sprite->setPosition(Vec2(visibleSize.width / 4, 60));
 
-//	Animation* cow_stay_anim = Animation::create();
+	auto cow_frame_cache = SpriteFrameCache::getInstance();// кеш загружен в AppDeligate.cpp ( spritecache->addSpriteFramesWithFile("res/cow/cow_stay_sheet.plist"); )
 
-//	// load image file from local file system to CCSpriteFrame, then add into CCAnimation
-//	for (int i = 1; i <= 6; ++i) {
-//		char imageFileName[128];
+	Animation* cow_stay_anim = Animation::create();
+	for (int i = 1; i <= 13; i++) {
+		std::stringstream file_name;
+		file_name << "./cow_stay_" << i;
+		//std::cout << file_name.str() << std::endl;
+		cow_stay_anim->addSpriteFrame(cow_frame_cache->getSpriteFrameByName(file_name.str()));
+	}
 
-//		sprintf(imageFileName, "cow_stay_%d.png", i);
-//		cow_stay_anim->addSpriteFrameWithFile(imageFileName);
-//	}
+	cow_stay_anim->setDelayPerUnit(0.08f);// / 6.0f); // This animation contains 14 frames, will     continuous 2.8 seconds.
+	cow_stay_anim->setLoops(CC_REPEAT_FOREVER);
 
-//	cow_stay_anim->setDelayPerUnit(0.2f);// / 6.0f); // This animation contains 14 frames, will     continuous 2.8 seconds.
-//	cow_stay_anim->setLoops(CC_REPEAT_FOREVER);
+	Animate* action = Animate::create(cow_stay_anim);
 
-//	Animate* action = Animate::create(cow_stay_anim);
+	// run action on sprite object
+	cow_sprite->runAction(action);
 
-//	cow_sprite->runAction(action);  // run action on sprite object
+	// add the sprite as a child to this layer
+	this->addChild(cow_sprite, 0);
+
+
+
+	//Vector<Sprite*> clouds = ;
+
 
 
 	// ============================== Menu Items: Start, High score, Exit ===============================
+	const std::pair<float, float> menu_scale = {0.5, 0.5};
 
+	Sprite* vertical_pointer = Sprite::create("res/pointer/pointer_vertical.png");
+	if (vertical_pointer) {
+		vertical_pointer->setScale(menu_scale.first, menu_scale.second);
+		vertical_pointer->setAnchorPoint(Vec2(0.5, 0));
+		vertical_pointer->setPosition(Vec2((visibleSize.width / 3) * 2 + 20, 20));
+		this->addChild(vertical_pointer, 0);
+	}
 
 	// create menu, it's an autorelease object
 	Menu* menu = Menu::createWithArray(this->CreateMenuItems());
 	menu->alignItemsVertically();
-	menu->setPosition(Vec2(
-											origin.x + visibleSize.width/2,
-											origin.y + visibleSize.height - menu->getContentSize().height/4));
+	menu->setScale(menu_scale.first, menu_scale.second);
+	menu->setAnchorPoint(Vec2(0.5, 0));
+	menu->setPosition(Vec2(visibleSize.width / 3 + 130, 350));
 	this->addChild(menu, 1);
 
 	return true;
@@ -94,24 +121,24 @@ Vector<MenuItem*> StartMenuScene::CreateMenuItems() {
 	Vector<MenuItem*> menuItems;
 
 	auto startItem = MenuBtnBuilder(
-				"start_btn_1.png",
-				"start_btn_2.png",
+				"res/pointer/pointer_start_default.png",
+				"res/pointer/pointer_start_selected.png",
 				CC_CALLBACK_1(StartMenuScene::menuStartGameCallback, this));
 	if (startItem) {
 		menuItems.pushBack(startItem);
 	}
 
 	auto highScoreItem = MenuBtnBuilder(
-				"h_score_btn_1.png",
-				"h_score_btn_2.png",
+				"res/pointer/pointer_high_score_default.png",
+				"res/pointer/pointer_high_score_selected.png",
 				CC_CALLBACK_1(StartMenuScene::menuHighScoreCallback, this));
 	if (highScoreItem) {
 		menuItems.pushBack(highScoreItem);
 	}
 
 	auto exitItem = MenuBtnBuilder(
-				"exit_btn_1.png",
-				"exit_btn_2.png",
+				"res/pointer/pointer_exit_default.png",
+				"res/pointer/pointer_exit_selected.png",
 				CC_CALLBACK_1(StartMenuScene::menuExitCallback, this));
 	if (exitItem) {
 		menuItems.pushBack(exitItem);
@@ -121,7 +148,7 @@ Vector<MenuItem*> StartMenuScene::CreateMenuItems() {
 }
 
 void StartMenuScene::menuStartGameCallback(Ref* pSender) {
-	Director::getInstance()->replaceScene(TransitionFlipY::create(SCENE_CHANGE_TIME, GameScene::createScene()));
+	Director::getInstance()->replaceScene(GameScene::createScene()); // (TransitionFlipY::create(SCENE_CHANGE_TIME, GameScene::createScene()));
 }
 
 void StartMenuScene::menuHighScoreCallback(Ref* pSender) {

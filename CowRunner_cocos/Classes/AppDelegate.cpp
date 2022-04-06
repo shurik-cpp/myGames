@@ -39,7 +39,7 @@ static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
-static cocos2d::Size myResolutionSize = cocos2d::Size(1024, 600);
+static cocos2d::Size myResolutionSize = cocos2d::Size(1366, 700);
 
 static cocos2d::Size designResolutionSize = myResolutionSize;
 
@@ -111,11 +111,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	register_all_packages();
 
-	// create a scene. it's an autorelease object
-	Scene* scene = StartMenuScene::createScene();
+	// загрузка Sprite Sheet
+	auto spritecache = SpriteFrameCache::getInstance();
+	spritecache->addSpriteFramesWithFile("res/cow/cow_stay_sheet.plist");
 
 	// run
-	director->runWithScene(scene);
+	director->runWithScene(StartMenuScene::createScene());
 
 	return true;
 }

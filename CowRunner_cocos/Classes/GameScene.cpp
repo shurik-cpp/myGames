@@ -31,9 +31,9 @@ Sprite* GameScene::BuildSprite(const UnitType type) {
 
 	switch (type) {
 		case UnitType::COW:
-			ss << "cow_stay_1.png";
+			ss << "res/cow/cow_stay_1.png";
 			name = "cow_stay_1";
-			sprite = Sprite::create(ss.str());
+			sprite = Sprite::create();
 		break;
 		case UnitType::APPLE:
 //			ss.flush();
@@ -53,19 +53,23 @@ Sprite* GameScene::BuildSprite(const UnitType type) {
 	}
 
 	if (type == UnitType::COW) {
-		//		auto cow_stay_anim = Animation::create();
-		//		// load image file from local file system to CCSpriteFrame, then add into CCAnimation
-		//		for (int i = 1; i <= 6; ++i) {
-		//			std::stringstream file_name;
-		//			file_name << "cow_stay_" << i << ".png";
-		//			cow_stay_anim->addSpriteFrameWithFile(file_name.str());
-		//		}
-		//		cow_stay_anim->setDelayPerUnit(0.2f);
-		//		cow_stay_anim->setLoops(CC_REPEAT_FOREVER);
+		auto cow_frame_cache = SpriteFrameCache::getInstance();// кеш загружен в AppDeligate.cpp ( spritecache->addSpriteFramesWithFile("res/cow/cow_stay_sheet.plist"); )
 
-		//		Animate* action = Animate::create(cow_stay_anim);
-		//		// run action on sprite object
-		//		sprite->runAction(action);
+		Animation* cow_stay_anim = Animation::create();
+		for (int i = 1; i <= 13; i++) {
+			std::stringstream file_name;
+			file_name << "./cow_stay_" << i;
+			//std::cout << file_name.str() << std::endl;
+			cow_stay_anim->addSpriteFrame(cow_frame_cache->getSpriteFrameByName(file_name.str()));
+		}
+
+		cow_stay_anim->setDelayPerUnit(0.08f);// / 6.0f); // This animation contains 14 frames, will     continuous 2.8 seconds.
+		cow_stay_anim->setLoops(CC_REPEAT_FOREVER);
+
+		Animate* action = Animate::create(cow_stay_anim);
+
+		// run action on sprite object
+		sprite->runAction(action);
 
 		sprite->setPosition(Vec2(visibleSize.height / 2, visibleSize.width / 2));
 	}
@@ -73,7 +77,7 @@ Sprite* GameScene::BuildSprite(const UnitType type) {
 		sprite->setPosition(Vec2(std::rand() % static_cast<int>(visibleSize.height),
 														 std::rand() % static_cast<int>(visibleSize.width)));
 	}
-
+	sprite->setScale(0.9, 0.9);
 	return sprite;
 }
 
@@ -98,12 +102,27 @@ bool GameScene::init() {
 	}
 
 	try {
-		Color4B blueSkyColor(Color3B(213, 255, 255));
+		//Color4B blueSkyColor(Color3B(213, 255, 255));
+		Color4B blueSkyColor(Color3B(184, 237, 255));
 		LayerColor* backgroundLayer = LayerColor::create(blueSkyColor);
 		this->addChild(backgroundLayer, LayerType::BACKGROUND);
 
-		mapLayer = BuildMapLayer(currentLevel);
+		//mapLayer = BuildMapLayer(currentLevel);
 		//this->addChild(mapLayer, LayerType::MAP);
+		const Vec2 grass_pos(-50, 0);
+		const Vec2 grass_anchor(0, 0);
+		const std::pair<float, float> sprites_scale = {0.3, 0.3};
+		Sprite* grass_back = Sprite::create("res/world/grass_back.png");
+		grass_back->setScale(sprites_scale.first, sprites_scale.second);
+		grass_back->setAnchorPoint(grass_anchor);
+		grass_back->setPosition(grass_pos);
+		this->addChild(grass_back, LayerType::BACKGROUND);
+
+		Sprite* grass_front = Sprite::create("res/world/grass_front.png");
+		grass_front->setScale(sprites_scale.first, sprites_scale.second);
+		grass_front->setAnchorPoint(grass_anchor);
+		grass_front->setPosition(grass_pos);
+		this->addChild(grass_front, LayerType::FRONT);
 
 		cow.setSprite(BuildSprite(UnitType::COW));
 		this->addChild(cow.getSprite(), LayerType::SPRITES);
@@ -114,7 +133,8 @@ bool GameScene::init() {
 		// creating a keyboard event listener
 		eventListener = EventListenerKeyboard::create();
 		eventListener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
-			switch(keyCode){
+			static_cast<void>(event);
+			switch(keyCode) {
 				case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 				case EventKeyboard::KeyCode::KEY_A:
 					std::cout << "Pressed LEFT key\n";
@@ -130,9 +150,7 @@ bool GameScene::init() {
 				case EventKeyboard::KeyCode::KEY_UP_ARROW:
 				case EventKeyboard::KeyCode::KEY_W:
 					std::cout << "Pressed UP key\n";
-					if (cow.getJumpStatus() == UnitJumpStatus::ON_LAND) {
-						cow.setJumpStatus(UnitJumpStatus::UP);
-					}
+					isUpKey = true;
 				break;
 				case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 				case EventKeyboard::KeyCode::KEY_S:
@@ -147,6 +165,7 @@ bool GameScene::init() {
 		};
 
 		eventListener->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event) {
+			static_cast<void>(event);
 			switch(keyCode){
 				case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 				case EventKeyboard::KeyCode::KEY_A:
@@ -161,7 +180,7 @@ bool GameScene::init() {
 				case EventKeyboard::KeyCode::KEY_UP_ARROW:
 				case EventKeyboard::KeyCode::KEY_W:
 					std::cout << "Released UP key\n";
-
+					isUpKey = false;
 				break;
 				case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 				case EventKeyboard::KeyCode::KEY_S:
@@ -175,6 +194,14 @@ bool GameScene::init() {
 
 		// Запускаем игровой цикл
 		// Как только игровой цикл открывается, он вызывает функцию GameScene::update(float dt)
+		// у нас есть контроль над приоритетом, с которым программа обновления будет просматривать нашу функцию обновления.
+		// По умолчанию, когда мы вызываем scheduleUpdate(), наша функция обновления будет вызываться для каждого кадра.
+		// Если узел, который мы обновляем, не нужно обновлять каждый кадр, мы просто тратим впустую мощность процессора
+		// (и время автономной работы). Если есть обновление с более низким приоритетом, мы можем использовать:
+		// this->scheduleUpdateWithPriority(42);
+		// Сначала вызывает все update(), для которых не установлен приоритет. Затем вызовет узел с наименьшим значением,
+		// затем следующий с наибольшим и т.д.
+		// (https://gamefromscratch.com/cocos2d-x-tutorial-series-game-loop-updates-and-action-handling/)
 		this->scheduleUpdate();
 	}
 	catch (std::invalid_argument& ex) {
@@ -185,6 +212,11 @@ bool GameScene::init() {
 	return true;
 }
 
+// Параметр, передаваемый для обновления — это значение, представляющее количество времени в секундах
+// с момента последнего вызова функции обновления.
+// Поэтому, если с момента последнего вызова обновления прошло 1/10 секунды, переданное значение будет равно 0.1
+// В двух словах, при покадровом перемещении выражайте свои единицы в секундах,
+// а затем умножайте их на дельту, переданную в функцию обновления.
 void GameScene::update(float delta) {
 //	Size visibleSize = Director::getInstance()->getVisibleSize();
 //	const float gravity = 9.8;
@@ -196,7 +228,7 @@ void GameScene::update(float delta) {
 	}
 
 	if (cow.getState() == UnitState::WALK) {
-		const float SPEED = 10;
+		const float SPEED = 350 * delta;
 		float cow_speed = 0;
 		if (isKeyLeft && isKeyRight) {
 			// TODO корова мычит и воспроизводится анимация недовольной коровы (встает на дыбы? :D)
@@ -213,9 +245,16 @@ void GameScene::update(float delta) {
 
 
 	const float cow_posY = cow.getSprite()->getPositionY();
-	const float MAX_JUMP_ACCELERATION = 20;
-	const float ACCEL_DELTA = 0.7;
+	const float MAX_JUMP_ACCELERATION = 1000 * delta;
+	const float JUMP_DELTA = 30 * delta;
+	const float COW_ON_LAND_Y = 125;
 	static float jump_acceleration = 0;
+
+	if (cow.getJumpStatus() == UnitJumpStatus::ON_LAND) {
+		if (isUpKey) {
+			cow.setJumpStatus(UnitJumpStatus::UP);
+		}
+	}
 
 	if (cow.getJumpStatus() == UnitJumpStatus::UP) {
 		jump_acceleration = MAX_JUMP_ACCELERATION;
@@ -224,21 +263,21 @@ void GameScene::update(float delta) {
 	else if (cow.getJumpStatus() == UnitJumpStatus::FLY) {
 		if (jump_acceleration > 0) {
 			cow.getSprite()->setPositionY(cow_posY + jump_acceleration);
-			jump_acceleration -= ACCEL_DELTA;
+			jump_acceleration -= JUMP_DELTA;
 		} else {
 			cow.setJumpStatus(UnitJumpStatus::DOWN);
 			jump_acceleration = 0;
 		}
 	}
 	else if (cow.getJumpStatus() == UnitJumpStatus::DOWN) {
-		if (cow_posY >= cow.getSprite()->getContentSize().height / 2) {
+		if (cow_posY >= COW_ON_LAND_Y) {
 			cow.getSprite()->setPositionY(cow_posY - jump_acceleration);
 			if (jump_acceleration < MAX_JUMP_ACCELERATION) {
-				jump_acceleration += ACCEL_DELTA;
+				jump_acceleration += JUMP_DELTA;
 			}
 		}
 		else {
-			cow.getSprite()->setPositionY(cow.getSprite()->getContentSize().height / 2);
+			cow.getSprite()->setPositionY(COW_ON_LAND_Y);
 			cow.setJumpStatus(UnitJumpStatus::ON_LAND);
 			jump_acceleration = 0;
 		}
