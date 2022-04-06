@@ -40,12 +40,26 @@ public:
 	UnitState getState() const { return state; }
 	void setJumpStatus(const UnitJumpStatus js) { jump = js; }
 	UnitJumpStatus getJumpStatus() const { return jump; }
-
+	//============================ IMPLEMENT THIS! =====================================
+	void setUnitAnimation(cocos2d::Animate* anim);
+	void updateUnitAnimation();
+	//==================================================================================
+	struct Animations {
+		cocos2d::Animate* state;
+		cocos2d::Animate* walk;
+		cocos2d::Animate* jump_up;
+		cocos2d::Animate* jump_down;
+		cocos2d::Animate* run;
+	};
+	//==================================================================================
 private:
 	cocos2d::Sprite* sprite = nullptr;
 	UnitDirection direction = RIGHT;
 	UnitState state = STOP;
 	UnitJumpStatus jump = DOWN;
+	//==================================================================================
+	Animations animations;
+	//==================================================================================
 };
 
 

@@ -113,7 +113,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	// загрузка Sprite Sheet
 	auto spritecache = SpriteFrameCache::getInstance();
-	spritecache->addSpriteFramesWithFile("res/cow/cow_stay_sheet.plist");
+	spritecache->addSpriteFramesWithFile("res/cow/cow_sprite_sheet.plist");
 
 	// run
 	director->runWithScene(StartMenuScene::createScene());
