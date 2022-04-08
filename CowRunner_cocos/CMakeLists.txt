@@ -60,6 +60,7 @@ list(APPEND GAME_SOURCE
 		 Classes/StartMenuScene.cpp
 		 Classes/PauseScene.cpp
 		 Classes/GameScene.cpp
+		 Classes/GameUnit.cpp
 
      )
 list(APPEND GAME_HEADER
@@ -67,6 +68,7 @@ list(APPEND GAME_HEADER
 		 Classes/StartMenuScene.h
 		 Classes/PauseScene.h
 		 Classes/GameScene.h
+		 Classes/GameUnit.h
 
      )
 

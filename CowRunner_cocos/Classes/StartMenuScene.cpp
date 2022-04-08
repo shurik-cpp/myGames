@@ -72,7 +72,7 @@ bool StartMenuScene::init()
 	Animation* cow_stay_anim = Animation::create();
 	for (int i = 1; i <= 13; i++) {
 		std::stringstream file_name;
-		file_name << "./cow_stay_" << i;
+		file_name << "./cow_stand_" << i;
 		//std::cout << file_name.str() << std::endl;
 		cow_stay_anim->addSpriteFrame(cow_frame_cache->getSpriteFrameByName(file_name.str()));
 	}
@@ -80,10 +80,10 @@ bool StartMenuScene::init()
 	cow_stay_anim->setDelayPerUnit(0.08f);// / 6.0f); // This animation contains 14 frames, will     continuous 2.8 seconds.
 	cow_stay_anim->setLoops(CC_REPEAT_FOREVER);
 
-	Animate* action = Animate::create(cow_stay_anim);
+	//Animate* action = Animate::create(cow_stay_anim);
 
 	// run action on sprite object
-	cow_sprite->runAction(action);
+	cow_sprite->runAction(Animate::create(cow_stay_anim));
 
 	// add the sprite as a child to this layer
 	this->addChild(cow_sprite, 0);

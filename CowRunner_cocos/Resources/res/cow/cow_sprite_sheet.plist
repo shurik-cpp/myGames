@@ -4,7 +4,7 @@
  <dict>
   <key>frames</key>
   <dict>
-   <key>./cow_stay_1</key>
+   <key>./cow_stand_1</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -19,7 +19,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_10</key>
+   <key>./cow_stand_10</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -34,7 +34,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_11</key>
+   <key>./cow_stand_11</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -49,7 +49,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_12</key>
+   <key>./cow_stand_12</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -64,7 +64,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_13</key>
+   <key>./cow_stand_13</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -79,7 +79,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_2</key>
+   <key>./cow_stand_2</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -94,7 +94,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_3</key>
+   <key>./cow_stand_3</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -109,7 +109,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_4</key>
+   <key>./cow_stand_4</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -124,7 +124,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_5</key>
+   <key>./cow_stand_5</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -139,7 +139,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_6</key>
+   <key>./cow_stand_6</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -154,7 +154,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_7</key>
+   <key>./cow_stand_7</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -169,7 +169,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_8</key>
+   <key>./cow_stand_8</key>
    <dict>
     <key>aliases</key>
     <array/>
@@ -184,7 +184,7 @@
     <key>textureRotated</key>
     <false/>
    </dict>
-   <key>./cow_stay_9</key>
+   <key>./cow_stand_9</key>
    <dict>
     <key>aliases</key>
     <array/>
