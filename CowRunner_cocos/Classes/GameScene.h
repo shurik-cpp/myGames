@@ -14,9 +14,9 @@ class GameScene : public cocos2d::Scene {
 public:
 	static cocos2d::Scene* createScene();
 
-	virtual bool init();
+	virtual bool init() override;
 
-	virtual void update(float delta);
+	virtual void update(float delta) override;
 
 	// implement the "static create()" method manually
 	CREATE_FUNC(GameScene);

@@ -10,6 +10,7 @@ struct isEvents {
 	bool isKeyRight = false;
 	bool isUpKey = false;
 	bool isDownKey = false;
+	bool isShiftKey = false;
 	bool is_change_animation = false;
 };
 
@@ -49,7 +50,7 @@ private:
 		if (unit_name == "cow") {
 			anims_frames[UnitState::STAND] = 13;
 			anims_frames[UnitState::WALK] = 11;
-			anims_frames[UnitState::RUN] = 0;
+			anims_frames[UnitState::RUN] = 14;
 			anims_frames[UnitState::JUMP] = 0;
 			anims_frames[UnitState::WAIT] = 0;
 		}

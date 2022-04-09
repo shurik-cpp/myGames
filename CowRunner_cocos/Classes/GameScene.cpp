@@ -3,11 +3,13 @@
 USING_NS_CC;
 
 
-GameScene::~GameScene() {
+GameScene::~GameScene()
+{
 	CC_SAFE_DELETE(mapLayer);
 }
 
-TMXTiledMap* GameScene::BuildMapLayer(int level) {
+TMXTiledMap* GameScene::BuildMapLayer(int level)
+{
 	std::stringstream ss;
 	ss << "map_" << level << ".tmx";
 	std::cout << ss.str() << '\n';
@@ -15,7 +17,8 @@ TMXTiledMap* GameScene::BuildMapLayer(int level) {
 	return TMXTiledMap::create(ss.str());
 }
 
-Sprite* GameScene::BuildSprite(const UnitType type) {
+Sprite* GameScene::BuildSprite(const UnitType type)
+{
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Sprite* sprite = Sprite::create();
 	switch (type) {
@@ -33,8 +36,8 @@ Sprite* GameScene::BuildSprite(const UnitType type) {
 	return sprite;
 }
 
-Scene* GameScene::createScene() {
-
+Scene* GameScene::createScene()
+{
 	// create the scene with physics enabled
 	auto scene = Scene::create();
 
@@ -46,8 +49,8 @@ Scene* GameScene::createScene() {
 }
 
 // on "init" you need to initialize your instance
-bool GameScene::init() {
-
+bool GameScene::init()
+{
 	if ( !Scene::init() ) {
 		return false;
 	}
@@ -103,7 +106,10 @@ bool GameScene::init() {
 			case EventKeyboard::KeyCode::KEY_S:
 				//std::cout << "Pressed DOWN key\n";
 				is_events.isDownKey = true;
-
+			break;
+			case EventKeyboard::KeyCode::KEY_LEFT_SHIFT:
+			case EventKeyboard::KeyCode::KEY_RIGHT_SHIFT:
+				is_events.isShiftKey = true;
 			break;
 		}
 		is_events.is_change_animation = true;
@@ -132,6 +138,10 @@ bool GameScene::init() {
 				//std::cout << "Released DOWN key\n";
 				is_events.isDownKey = false;
 			break;
+			case EventKeyboard::KeyCode::KEY_LEFT_SHIFT:
+			case EventKeyboard::KeyCode::KEY_RIGHT_SHIFT:
+				is_events.isShiftKey = false;
+			break;
 		}
 		is_events.is_change_animation = true;
 	};
@@ -148,8 +158,8 @@ bool GameScene::init() {
 	// Сначала вызывает все update(), для которых не установлен приоритет. Затем вызовет узел с наименьшим значением,
 	// затем следующий с наибольшим и т.д.
 	// (https://gamefromscratch.com/cocos2d-x-tutorial-series-game-loop-updates-and-action-handling/)
-	//this->scheduleUpdate();
-	this->scheduleUpdateWithPriority(42);
+	this->scheduleUpdate();
+
 
 	return true;
 }
@@ -159,8 +169,8 @@ bool GameScene::init() {
 // Поэтому, если с момента последнего вызова обновления прошло 1/10 секунды, переданное значение будет равно 0.1
 // В двух словах, при покадровом перемещении выражайте свои единицы в секундах,
 // а затем умножайте их на дельту, переданную в функцию обновления.
-void GameScene::update(float delta) {
-
+void GameScene::update(float delta)
+{
 	cow->tick(is_events, delta);
 
 //	auto fruit_sprite = BuildSprite(UnitType::APPLE);

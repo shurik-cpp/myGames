@@ -2,7 +2,8 @@
 
 USING_NS_CC;
 
-Animation* GameUnit::CreateAnimation(const UnitState action, float delay, unsigned int loops) {
+Animation* GameUnit::CreateAnimation(const UnitState action, float delay, unsigned int loops)
+{
 	auto animation = Animation::create();
 	auto cow_frame_cache = SpriteFrameCache::getInstance(); // кеш загружен в AppDeligate.cpp ( spritecache->addSpriteFramesWithFile("res/cow/cow_stay_sheet.plist"); )
 
@@ -17,7 +18,8 @@ Animation* GameUnit::CreateAnimation(const UnitState action, float delay, unsign
 	return animation;
 }
 
-void GameUnit::initAnimations() {
+void GameUnit::initAnimations()
+{
 	auto animCache = AnimationCache::getInstance();
 
 	animCache->addAnimation(
@@ -28,50 +30,56 @@ void GameUnit::initAnimations() {
 				CreateAnimation(UnitState::WALK, 0.07, CC_REPEAT_FOREVER),
 				anim_manager.GetAnimationName(UnitState::WALK)
 				);
-
-
+	animCache->addAnimation(
+				CreateAnimation(UnitState::RUN, 0.02, CC_REPEAT_FOREVER),
+				anim_manager.GetAnimationName(UnitState::RUN)
+				);
 
 	updateUnitAnimation();
 }
 
-void GameUnit::updateUnitAnimation() {
-	std::cerr << "Update animation with state = " << state << std::endl;
-	static int counterEntryes = 0;
-	std::cerr << "counterEntryes = " << counterEntryes << std::endl;
-	counterEntryes++;
+void GameUnit::updateUnitAnimation()
+{
 	sprite->stopAllActions();
-
 	auto animCache = AnimationCache::getInstance();
 	sprite->runAction(Animate::create(animCache->getAnimation(anim_manager.GetAnimationName(state))));
-
-	std::cerr << "Update animation success." << std::endl;
 }
 
-void GameUnit::tick(isEvents& is_events, float delta) {
-
-	if (is_events.isKeyLeft || is_events.isKeyRight) {
+void GameUnit::tick(isEvents& is_events, float delta)
+{
+	if ((is_events.isKeyLeft && !is_events.isShiftKey) ||
+			(is_events.isKeyRight && !is_events.isShiftKey)) {
 		state = UnitState::WALK;
+	} else if ((is_events.isKeyLeft && is_events.isShiftKey) ||
+						 (is_events.isKeyRight && is_events.isShiftKey)) {
+		state = UnitState::RUN;
 	} else if ((!is_events.isKeyLeft && !is_events.isKeyRight) ||
 						 (is_events.isKeyLeft && is_events.isKeyRight)) {
 		state = UnitState::STAND;
 	}
 
-	if (state == UnitState::WALK) {
-		const float SPEED = 5;//350 * delta;
-		float cow_speed = 0;
-		if (is_events.isKeyLeft && is_events.isKeyRight) {
-			// TODO корова мычит и воспроизводится анимация недовольной коровы (встает на дыбы? :D)
-		}	else if (is_events.isKeyLeft) {
-			direction = UnitDirection::LEFT;
-			cow_speed -= SPEED;
-		} else if (is_events.isKeyRight) {
-			direction = UnitDirection::RIGHT;
-			cow_speed += SPEED;
-		}
-		sprite->setFlippedX(!static_cast<bool>(direction));
 
-		sprite->setPositionX(sprite->getPositionX() + cow_speed);
+	float cow_speed = 0; //350 * delta;
+	if (state == UnitState::WALK) {
+		cow_speed = 5;
+	} else if (state == UnitState::RUN) {
+		cow_speed = 12;
 	}
+
+	if (is_events.isKeyLeft && is_events.isKeyRight) {
+		// TODO корова мычит и воспроизводится анимация недовольной коровы (встает на дыбы? :D)
+		state = UnitState::STAND;
+		cow_speed = 0;
+	}	else if (is_events.isKeyLeft) {
+		direction = UnitDirection::LEFT;
+		cow_speed *= -1;
+	} else if (is_events.isKeyRight) {
+		direction = UnitDirection::RIGHT;
+		//cow_speed *= 1;
+	}
+	sprite->setFlippedX(!static_cast<bool>(direction));
+	sprite->setPositionX(sprite->getPositionX() + cow_speed);
+
 
 	const float cow_posY = sprite->getPositionY();
 	const float MAX_JUMP_ACCELERATION = 25; //1000 * delta;  // высота прыжка
