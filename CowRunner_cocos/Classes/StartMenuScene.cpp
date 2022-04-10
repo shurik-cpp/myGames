@@ -43,9 +43,9 @@ bool StartMenuScene::init()
 	LayerColor* backgroundLayer = LayerColor::create(blueSkyColor);
 	this->addChild(backgroundLayer, -1);
 
-	const Vec2 grass_pos(-50, 0);
+	const Vec2 grass_pos(0, 0);
 	const Vec2 grass_anchor(0, 0);
-	const std::pair<float, float> sprites_scale = {0.3, 0.3};
+	const std::pair<float, float> sprites_scale = {0.9, 0.9};
 	Sprite* grass_back = Sprite::create("res/world/grass_back.png");
 	grass_back->setScale(sprites_scale.first, sprites_scale.second);
 	grass_back->setAnchorPoint(grass_anchor);
@@ -63,9 +63,9 @@ bool StartMenuScene::init()
 	Sprite* cow_sprite = Sprite::create();
 
 	// position the sprite on the center of the screen
-	cow_sprite->setScale(0.9, 0.9);
+	cow_sprite->setScale(sprites_scale.first, sprites_scale.second);
 	cow_sprite->setAnchorPoint(Vec2(0.5, 0));
-	cow_sprite->setPosition(Vec2(visibleSize.width / 4, 60));
+	cow_sprite->setPosition(Vec2(visibleSize.width / 4, 40));
 
 	auto cow_frame_cache = SpriteFrameCache::getInstance();// кеш загружен в AppDeligate.cpp ( spritecache->addSpriteFramesWithFile("res/cow/cow_stay_sheet.plist"); )
 

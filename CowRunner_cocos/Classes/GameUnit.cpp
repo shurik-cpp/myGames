@@ -82,9 +82,9 @@ void GameUnit::tick(isEvents& is_events, float delta)
 
 
 	const float cow_posY = sprite->getPositionY();
-	const float MAX_JUMP_ACCELERATION = 25; //1000 * delta;  // высота прыжка
-	const float JUMP_DELTA = 1; //30 * delta;                // замедление/ускорение
-	const float COW_ON_LAND_Y = 125;
+	const float MAX_JUMP_ACCELERATION = 30; //1000 * delta;  // высота прыжка
+	const float JUMP_DELTA = 1.5; //std::rand() % 5; //30 * delta;                // замедление/ускорение
+	const float COW_ON_LAND_Y = 105;
 	static float jump_acceleration = 0;
 
 	if (jump == UnitJumpStatus::ON_LAND) {

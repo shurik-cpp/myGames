@@ -61,9 +61,9 @@ bool GameScene::init()
 
 	//mapLayer = BuildMapLayer(currentLevel);
 	//this->addChild(mapLayer, LayerType::MAP);
-	const Vec2 grass_pos(-50, 0);
+	const Vec2 grass_pos(0, 0);
 	const Vec2 grass_anchor(0, 0);
-	const std::pair<float, float> sprites_scale = {0.3, 0.3};
+	const std::pair<float, float> sprites_scale = {0.9, 0.9};
 	Sprite* grass_back = Sprite::create("res/world/grass_back.png");
 	grass_back->setScale(sprites_scale.first, sprites_scale.second);
 	grass_back->setAnchorPoint(grass_anchor);
