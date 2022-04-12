@@ -83,6 +83,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		glview = GLViewImpl::create("Cow Runner");
 #endif
 		director->setOpenGLView(glview);
+		//glview->setIcon("");
+		GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
+		view->setFullscreen();
 	}
 
 	// turn on display FPS
@@ -112,7 +115,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	register_all_packages();
 
-	// загрузка Sprite Sheet
+	// загрузка кеша Sprite Sheet
 	auto spritecache = SpriteFrameCache::getInstance();
 	spritecache->addSpriteFramesWithFile("res/cow/cow_sprite_sheet.plist");
 

@@ -111,6 +111,9 @@ bool GameScene::init()
 			case EventKeyboard::KeyCode::KEY_RIGHT_SHIFT:
 				is_events.isShiftKey = true;
 			break;
+			case EventKeyboard::KeyCode::KEY_SPACE:
+
+			break;
 		}
 		is_events.is_change_animation = true;
 	};
@@ -141,6 +144,12 @@ bool GameScene::init()
 			case EventKeyboard::KeyCode::KEY_LEFT_SHIFT:
 			case EventKeyboard::KeyCode::KEY_RIGHT_SHIFT:
 				is_events.isShiftKey = false;
+			break;
+			case EventKeyboard::KeyCode::KEY_ESCAPE:
+				Director::getInstance()->replaceScene(StartMenuScene::createScene());
+			break;
+			case EventKeyboard::KeyCode::KEY_SPACE:
+
 			break;
 		}
 		is_events.is_change_animation = true;
@@ -177,4 +186,9 @@ void GameScene::update(float delta)
 //	mapLayer->addChild(fruit_sprite, LayerType::SPRITES);
 //	this->GameLogic();
 
+//	if (is_events.isKeyLeft) {
+//		float x, y, z;
+//		this->getCamera()->getEye(&x, &y, &z);
+//		map->getCamera()->setEye(x-200, y, z+300);
+//	}
 }
