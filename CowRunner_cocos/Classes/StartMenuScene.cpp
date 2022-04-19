@@ -20,15 +20,13 @@ MenuItem* MenuBtnBuilder(const std::string& normalImage,
 	return item;
 }
 
-Scene* StartMenuScene::createScene()
-{
+Scene* StartMenuScene::createScene() {
 	return StartMenuScene::create();
 }
 
 
 // on "init" you need to initialize your instance
-bool StartMenuScene::init()
-{
+bool StartMenuScene::init() {
 	//////////////////////////////
 	// 1. super init first
 	if ( !Scene::init() ) {
@@ -43,7 +41,7 @@ bool StartMenuScene::init()
 	LayerColor* backgroundLayer = LayerColor::create(blueSkyColor);
 	this->addChild(backgroundLayer, -1);
 
-	const Vec2 grass_pos(0, 0);
+	const Vec2 grass_pos(-300, 0);
 	const Vec2 grass_anchor(0, 0);
 	const std::pair<float, float> sprites_scale = {0.9, 0.9};
 	Sprite* grass_back = Sprite::create("res/world/grass_back.png");
@@ -101,17 +99,18 @@ bool StartMenuScene::init()
 	if (vertical_pointer) {
 		vertical_pointer->setScale(menu_scale.first, menu_scale.second);
 		vertical_pointer->setAnchorPoint(Vec2(0.5, 0));
-		vertical_pointer->setPosition(Vec2((visibleSize.width / 3) * 2 + 20, 20));
+		vertical_pointer->setPosition(Vec2((visibleSize.width / 3) * 2 + 20, 10));
 		this->addChild(vertical_pointer, 0);
+
+		// create menu, it's an autorelease object
+		Menu* menu = Menu::createWithArray(this->CreateMenuItems());
+		menu->alignItemsVertically();
+		menu->setAnchorPoint(Vec2(0.5, 0.0));
+		menu->setPosition(Vec2(50.0, 650.0));
+		vertical_pointer->addChild(menu, 1);
 	}
 
-	// create menu, it's an autorelease object
-	Menu* menu = Menu::createWithArray(this->CreateMenuItems());
-	menu->alignItemsVertically();
-	menu->setScale(menu_scale.first, menu_scale.second);
-	menu->setAnchorPoint(Vec2(0.5, 0));
-	menu->setPosition(Vec2(visibleSize.width / 3 + 130, 350));
-	this->addChild(menu, 1);
+
 
 	return true;
 }

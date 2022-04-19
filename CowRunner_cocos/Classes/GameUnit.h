@@ -24,7 +24,7 @@ enum UnitState {
 
 class AnimationManager {
 public:
-	AnimationManager(const std::string& name) : unit_name(name) {
+	explicit AnimationManager(const std::string& name) : unit_name(name) {
 		initNumberOfFramesAndDelays();
 		names_of_state[UnitState::STAND] = BuildAnimationName("stand");
 		names_of_state[UnitState::WAIT] = BuildAnimationName("wait");
@@ -42,8 +42,8 @@ public:
 private:
 	std::string unit_name;
 	UnitState state;
-	// pair<количество кадров, задержка между кадрами>
-	std::unordered_map<UnitState, std::pair<int, float>> anims_frames_and_delays;
+
+	std::unordered_map<UnitState, std::pair<int, float>> anims_frames_and_delays; // pair<количество кадров, задержка между кадрами>
 	std::unordered_map<UnitState, std::string> names_of_state;
 
 	void initNumberOfFramesAndDelays() {
@@ -74,32 +74,22 @@ class GameUnit {
 public:
 	explicit GameUnit(const std::string& name)
 		: unit_name(name)
-		, anim_manager(name) {
-	}
-	~GameUnit() {
+		, anim_manager(name) { }
+
+	virtual ~GameUnit() {
 		//cocos2d::AnimationCache::getInstance()->destroyInstance();
 		CC_SAFE_DELETE(sprite);
 	}
 
-	cocos2d::Sprite* getSprite() { return sprite; }
-	void setSprite(cocos2d::Sprite* s) { sprite = s; }
+	virtual cocos2d::Sprite* getSprite() { return sprite; }
+	virtual void setSprite(cocos2d::Sprite* s) { sprite = s; }
 
-	void initAnimations();
-
-	void tick(isEvents& events, float delta);
+	virtual void initAnimations();
+	virtual void tick(isEvents& events, const float delta);
 
 private:
-	enum UnitDirection {
-		LEFT,
-		RIGHT
-	};
-
-	enum UnitJumpStatus {
-		FLY,
-		UP,
-		DOWN,
-		ON_LAND
-	};
+	enum UnitDirection { LEFT, RIGHT };
+	enum UnitJumpStatus { FLY, UP, DOWN, ON_LAND };
 
 	cocos2d::Sprite* sprite = nullptr;
 	UnitDirection direction = RIGHT;
@@ -108,8 +98,16 @@ private:
 	std::string unit_name;
 	AnimationManager anim_manager;
 
-	cocos2d::Animation* CreateAnimation(const UnitState action, unsigned int loops);
+	cocos2d::Animation* CreateAnimation(const UnitState action, const unsigned int loops);
 	void updateUnitAnimation();
+};
+
+class Cow : public GameUnit {
+	void tick(isEvents& events, const float delta) override;
+};
+
+class Enemy : public GameUnit {
+	void tick(isEvents& events, const float delta) override;
 };
 
 #endif // GAMEUNIT_H

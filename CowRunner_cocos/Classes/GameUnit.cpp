@@ -2,8 +2,7 @@
 
 USING_NS_CC;
 
-Animation* GameUnit::CreateAnimation(const UnitState action, unsigned int loops)
-{
+Animation* GameUnit::CreateAnimation(const UnitState action, const unsigned int loops) {
 	auto animation = Animation::create();
 	auto cow_frame_cache = SpriteFrameCache::getInstance(); // кеш загружен в AppDeligate.cpp ( spritecache->addSpriteFramesWithFile("res/cow/cow_stay_sheet.plist"); )
 	anim_manager.SetState(action);
@@ -18,8 +17,7 @@ Animation* GameUnit::CreateAnimation(const UnitState action, unsigned int loops)
 	return animation;
 }
 
-void GameUnit::initAnimations()
-{
+void GameUnit::initAnimations() {
 	auto animCache = AnimationCache::getInstance();
 
 	animCache->addAnimation(
@@ -38,15 +36,13 @@ void GameUnit::initAnimations()
 	updateUnitAnimation();
 }
 
-void GameUnit::updateUnitAnimation()
-{
+void GameUnit::updateUnitAnimation() {
 	sprite->stopAllActions();
 	auto animCache = AnimationCache::getInstance();
 	sprite->runAction(Animate::create(animCache->getAnimation(anim_manager.GetAnimationName(state))));
 }
 
-void GameUnit::tick(isEvents& is_events, float delta)
-{
+void GameUnit::tick(isEvents& is_events, const float delta) {
 	if ((is_events.isKeyLeft && !is_events.isShiftKey) ||
 			(is_events.isKeyRight && !is_events.isShiftKey)) {
 		state = UnitState::WALK;
@@ -84,7 +80,7 @@ void GameUnit::tick(isEvents& is_events, float delta)
 	const float cow_posY = sprite->getPositionY();
 	const float MAX_JUMP_ACCELERATION = 25; //1000 * delta;  // высота прыжка
 	const float JUMP_DELTA = 1.1; //std::rand() % 5; //30 * delta;                // замедление/ускорение
-	const float COW_ON_LAND_Y = 105;
+	const float COW_ON_LAND_Y = 120; // 105
 	static float jump_acceleration = 0;
 
 	if (jump_status == UnitJumpStatus::ON_LAND) {

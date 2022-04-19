@@ -31,16 +31,13 @@ private:
 		FRONT
 	};
 
-	enum UnitType {
-		COW,
-		APPLE,
-		ENEMY
-	};
+	enum UnitType { COW, APPLE, ENEMY };
 
 	int currentLevel = 0;
 
 	cocos2d::EventListenerKeyboard* eventListener = nullptr;
 	cocos2d::TMXTiledMap* mapLayer = nullptr;
+	const float objects_scale_XY = 0.9;
 	std::shared_ptr<GameUnit> cow;
 
 	cocos2d::TMXTiledMap* BuildMapLayer(int level);

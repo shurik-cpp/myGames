@@ -3,13 +3,11 @@
 USING_NS_CC;
 
 
-GameScene::~GameScene()
-{
+GameScene::~GameScene() {
 	CC_SAFE_DELETE(mapLayer);
 }
 
-TMXTiledMap* GameScene::BuildMapLayer(int level)
-{
+TMXTiledMap* GameScene::BuildMapLayer(int level) {
 	std::stringstream ss;
 	ss << "map_" << level << ".tmx";
 	std::cout << ss.str() << '\n';
@@ -17,8 +15,7 @@ TMXTiledMap* GameScene::BuildMapLayer(int level)
 	return TMXTiledMap::create(ss.str());
 }
 
-Sprite* GameScene::BuildSprite(const UnitType type)
-{
+Sprite* GameScene::BuildSprite(const UnitType type) {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Sprite* sprite = Sprite::create();
 	switch (type) {
@@ -32,13 +29,12 @@ Sprite* GameScene::BuildSprite(const UnitType type)
 		break;
 	}
 
-	sprite->setScale(0.9, 0.9);
+	sprite->setScale(objects_scale_XY, objects_scale_XY);
 	return sprite;
 }
 
-Scene* GameScene::createScene()
-{
-	// create the scene with physics enabled
+Scene* GameScene::createScene() {
+
 	auto scene = Scene::create();
 
 	// Создаём слой
@@ -49,8 +45,8 @@ Scene* GameScene::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool GameScene::init()
-{
+bool GameScene::init() {
+
 	if ( !Scene::init() ) {
 		return false;
 	}
@@ -61,7 +57,7 @@ bool GameScene::init()
 
 	//mapLayer = BuildMapLayer(currentLevel);
 	//this->addChild(mapLayer, LayerType::MAP);
-	const Vec2 grass_pos(0, 0);
+	const Vec2 grass_pos(-15.0, 0);
 	const Vec2 grass_anchor(0, 0);
 	const std::pair<float, float> sprites_scale = {0.9, 0.9};
 	Sprite* grass_back = Sprite::create("res/world/grass_back.png");
@@ -73,7 +69,7 @@ bool GameScene::init()
 	Sprite* grass_front = Sprite::create("res/world/grass_front.png");
 	grass_front->setScale(sprites_scale.first, sprites_scale.second);
 	grass_front->setAnchorPoint(grass_anchor);
-	grass_front->setPosition(grass_pos);
+	grass_front->setPosition(grass_pos.x, grass_pos.y - 35);
 	this->addChild(grass_front, LayerType::FRONT);
 
 	cow = std::make_shared<GameUnit>("cow");
@@ -178,8 +174,7 @@ bool GameScene::init()
 // Поэтому, если с момента последнего вызова обновления прошло 1/10 секунды, переданное значение будет равно 0.1
 // В двух словах, при покадровом перемещении выражайте свои единицы в секундах,
 // а затем умножайте их на дельту, переданную в функцию обновления.
-void GameScene::update(float delta)
-{
+void GameScene::update(float delta) {
 	cow->tick(is_events, delta);
 
 //	auto fruit_sprite = BuildSprite(UnitType::APPLE);

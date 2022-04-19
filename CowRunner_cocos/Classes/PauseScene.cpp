@@ -4,15 +4,13 @@
 USING_NS_CC;
 
 
-Scene* PauseScene::createScene()
-{
+Scene* PauseScene::createScene() {
 	return PauseScene::create();
 }
 
 
 // on "init" you need to initialize your instance
-bool PauseScene::init()
-{
+bool PauseScene::init() {
 	//////////////////////////////
 	// 1. super init first
 	if ( !Scene::init() ) {
