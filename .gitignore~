@@ -3,3 +3,6 @@ build-CowRunner-Desktop-Debug/
 build-corners_DominiGames-Desktop-Debug/
 chrono2/
 Resources/res/
+corners_DominiGames/.vscode/
+corners_DominiGames/build/
+corners_DominiGames/CMakeLists.txt.user.d18e5d2
