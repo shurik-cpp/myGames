@@ -330,9 +330,9 @@ int ProgramGL::getOriginalLocation(int location) const
 }
 #endif
 
-const UniformInfo& ProgramGL::getActiveUniformInfo(ShaderStage stage, int location) const
+const UniformInfo ProgramGL::getActiveUniformInfo(ShaderStage stage, int location) const
 {
-		return std::move(UniformInfo{});
+		return UniformInfo{};
 }
 
 const std::unordered_map<std::string, UniformInfo>& ProgramGL::getAllActiveUniformInfo(ShaderStage stage) const

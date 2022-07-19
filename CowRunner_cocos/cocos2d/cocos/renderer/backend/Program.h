@@ -133,7 +133,7 @@ public:
      * @param location Specifies the uniform locaion.
      * @return The uniformInfo.
      */
-    virtual const UniformInfo& getActiveUniformInfo(ShaderStage stage, int location) const = 0;
+		virtual const UniformInfo getActiveUniformInfo(ShaderStage stage, int location) const = 0;
 
     /**
      * Get all uniformInfos.

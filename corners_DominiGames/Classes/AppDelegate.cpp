@@ -57,9 +57,9 @@ void AppDelegate::initGLContextAttrs() {
 
 // if you want to use the package manager to install more packages,  
 // don't modify or remove this function
-static int register_all_packages() {
-	return 0; //flag for packages manager
-}
+//static int register_all_packages() {
+//	return 0; //flag for packages manager
+//}
 
 bool AppDelegate::applicationDidFinishLaunching() {
 	const cocos2d::Size designResolutionSize = cocos2d::Size(640, 640);
@@ -67,11 +67,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 
-	if(!glview) {
+	if (!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-		glview = GLViewImpl::createWithRect("corners_DominiGames", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+		glview = GLViewImpl::createWithRect("Simple corners", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
-		glview = GLViewImpl::create("corners_DominiGames");
+		glview = GLViewImpl::create("Simple corners");
 #endif
 		director->setOpenGLView(glview);
 	}
@@ -99,7 +99,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 //		director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
 //	}
 
-	register_all_packages();
+	// register_all_packages();
 	director->runWithScene(GameScene::createScene());
 
 	return true;

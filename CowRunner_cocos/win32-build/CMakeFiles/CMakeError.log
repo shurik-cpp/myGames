@@ -1,0 +1,172 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler:  
+Build flags: 
+Id flags:  
+
+The output was:
+1
+Microsoft (R) Build Engine версии 14.0.24720.0
+(C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+Сборка начата 04.06.2022 17:26:48.
+Целевой объект "BeforeGenerateProjectPriFile", указанный в атрибуте BeforeTargets для "C:\Program Files (x86)\MSBuild\Microsoft\NuGet\Microsoft.NuGet.targets (186,61)", не существует в проекте и будет пропущен.
+Проект "D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj" в узле 1 (целевые объекты по умолчанию).
+PrepareForBuild:
+  Создание каталога "Debug\".
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(366,5): warning MSB8003: Could not find WindowsSDKDir variable from the registry.  TargetFrameworkVersion or PlatformToolset may be set to an invalid version number. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj]
+  Создание каталога "Debug\CompilerIdC.tlog\".
+InitializeBuildStatus:
+  Создание "Debug\CompilerIdC.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
+ClCompile:
+  CL.exe /c /nologo /W0 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TC /analyze- /errorReport:queue CMakeCCompilerId.c
+TRACKER : error TRK0005: не удалось обнаружить "CL.exe". Не удается найти указанный файл. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj]
+  
+  
+Сборка проекта "D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj" завершена (целевые объекты по умолчанию) с ошибкой.
+
+Ошибка сборки.
+
+"D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj" (целевой объект по умолчанию) (1) ->
+(Целевой объект PrepareForBuild) -> 
+  C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(366,5): warning MSB8003: Could not find WindowsSDKDir variable from the registry.  TargetFrameworkVersion or PlatformToolset may be set to an invalid version number. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj]
+
+
+"D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj" (целевой объект по умолчанию) (1) ->
+(Целевой объект ClCompile) -> 
+  TRACKER : error TRK0005: не удалось обнаружить "CL.exe". Не удается найти указанный файл. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj]
+
+    Предупреждений: 1
+    Ошибок: 1
+
+Затраченное время: 00:00:01.69
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler:  
+Build flags: 
+Id flags:  
+
+The output was:
+1
+Microsoft (R) Build Engine версии 14.0.24720.0
+(C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+Сборка начата 04.06.2022 17:26:50.
+Целевой объект "BeforeGenerateProjectPriFile", указанный в атрибуте BeforeTargets для "C:\Program Files (x86)\MSBuild\Microsoft\NuGet\Microsoft.NuGet.targets (186,61)", не существует в проекте и будет пропущен.
+Проект "D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj" в узле 1 (целевые объекты по умолчанию).
+PrepareForBuild:
+  Создание каталога "Debug\".
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(366,5): warning MSB8003: Could not find WindowsSDKDir variable from the registry.  TargetFrameworkVersion or PlatformToolset may be set to an invalid version number. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj]
+  Создание каталога "Debug\CompilerIdC.tlog\".
+InitializeBuildStatus:
+  Создание "Debug\CompilerIdC.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
+ClCompile:
+  CL.exe /c /nologo /W0 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TC /analyze- /errorReport:queue CMakeCCompilerId.c
+TRACKER : error TRK0005: не удалось обнаружить "CL.exe". Не удается найти указанный файл. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj]
+  
+  
+Сборка проекта "D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj" завершена (целевые объекты по умолчанию) с ошибкой.
+
+Ошибка сборки.
+
+"D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj" (целевой объект по умолчанию) (1) ->
+(Целевой объект PrepareForBuild) -> 
+  C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(366,5): warning MSB8003: Could not find WindowsSDKDir variable from the registry.  TargetFrameworkVersion or PlatformToolset may be set to an invalid version number. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj]
+
+
+"D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj" (целевой объект по умолчанию) (1) ->
+(Целевой объект ClCompile) -> 
+  TRACKER : error TRK0005: не удалось обнаружить "CL.exe". Не удается найти указанный файл. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdC\CompilerIdC.vcxproj]
+
+    Предупреждений: 1
+    Ошибок: 1
+
+Затраченное время: 00:00:00.56
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler:  
+Build flags: 
+Id flags:  
+
+The output was:
+1
+Microsoft (R) Build Engine версии 14.0.24720.0
+(C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+Сборка начата 04.06.2022 17:26:52.
+Целевой объект "BeforeGenerateProjectPriFile", указанный в атрибуте BeforeTargets для "C:\Program Files (x86)\MSBuild\Microsoft\NuGet\Microsoft.NuGet.targets (186,61)", не существует в проекте и будет пропущен.
+Проект "D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj" в узле 1 (целевые объекты по умолчанию).
+PrepareForBuild:
+  Создание каталога "Debug\".
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(366,5): warning MSB8003: Could not find WindowsSDKDir variable from the registry.  TargetFrameworkVersion or PlatformToolset may be set to an invalid version number. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj]
+  Создание каталога "Debug\CompilerIdCXX.tlog\".
+InitializeBuildStatus:
+  Создание "Debug\CompilerIdCXX.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
+ClCompile:
+  CL.exe /c /nologo /W0 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:queue CMakeCXXCompilerId.cpp
+TRACKER : error TRK0005: не удалось обнаружить "CL.exe". Не удается найти указанный файл. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj]
+  
+  
+Сборка проекта "D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj" завершена (целевые объекты по умолчанию) с ошибкой.
+
+Ошибка сборки.
+
+"D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj" (целевой объект по умолчанию) (1) ->
+(Целевой объект PrepareForBuild) -> 
+  C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(366,5): warning MSB8003: Could not find WindowsSDKDir variable from the registry.  TargetFrameworkVersion or PlatformToolset may be set to an invalid version number. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj]
+
+
+"D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj" (целевой объект по умолчанию) (1) ->
+(Целевой объект ClCompile) -> 
+  TRACKER : error TRK0005: не удалось обнаружить "CL.exe". Не удается найти указанный файл. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj]
+
+    Предупреждений: 1
+    Ошибок: 1
+
+Затраченное время: 00:00:00.51
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler:  
+Build flags: 
+Id flags:  
+
+The output was:
+1
+Microsoft (R) Build Engine версии 14.0.24720.0
+(C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+Сборка начата 04.06.2022 17:26:53.
+Целевой объект "BeforeGenerateProjectPriFile", указанный в атрибуте BeforeTargets для "C:\Program Files (x86)\MSBuild\Microsoft\NuGet\Microsoft.NuGet.targets (186,61)", не существует в проекте и будет пропущен.
+Проект "D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj" в узле 1 (целевые объекты по умолчанию).
+PrepareForBuild:
+  Создание каталога "Debug\".
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(366,5): warning MSB8003: Could not find WindowsSDKDir variable from the registry.  TargetFrameworkVersion or PlatformToolset may be set to an invalid version number. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj]
+  Создание каталога "Debug\CompilerIdCXX.tlog\".
+InitializeBuildStatus:
+  Создание "Debug\CompilerIdCXX.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
+ClCompile:
+  CL.exe /c /nologo /W0 /WX- /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:queue CMakeCXXCompilerId.cpp
+TRACKER : error TRK0005: не удалось обнаружить "CL.exe". Не удается найти указанный файл. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj]
+  
+  
+Сборка проекта "D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj" завершена (целевые объекты по умолчанию) с ошибкой.
+
+Ошибка сборки.
+
+"D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj" (целевой объект по умолчанию) (1) ->
+(Целевой объект PrepareForBuild) -> 
+  C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(366,5): warning MSB8003: Could not find WindowsSDKDir variable from the registry.  TargetFrameworkVersion or PlatformToolset may be set to an invalid version number. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj]
+
+
+"D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj" (целевой объект по умолчанию) (1) ->
+(Целевой объект ClCompile) -> 
+  TRACKER : error TRK0005: не удалось обнаружить "CL.exe". Не удается найти указанный файл. [D:\myCodes\myGames\CowRunner_cocos\win32-build\CMakeFiles\3.23.1\CompilerIdCXX\CompilerIdCXX.vcxproj]
+
+    Предупреждений: 1
+    Ошибок: 1
+
+Затраченное время: 00:00:00.48
+
+

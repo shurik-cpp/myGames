@@ -81,8 +81,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
 		director->setOpenGLView(glview);
 		glview->setIcon("res/cow_icon.png");
-		//GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
-		//view->setFullscreen();
+		GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
+		view->setFullscreen();
 	}
 
 	// turn on display FPS

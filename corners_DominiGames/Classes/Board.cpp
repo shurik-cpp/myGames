@@ -105,8 +105,10 @@ void Board::MoveIsPosibleTo(const Vec2& move_to) {
 	Cell& target_cell = board[move_to.x][move_to.y];
 
 	if (target_cell.status == CellStatus::FREE) {
-		if (((target_cell.position_on_map.x == pawn.x + 1 || target_cell.position_on_map.x == pawn.x - 1) && target_cell.position_on_map.y == pawn.y) ||
-				((target_cell.position_on_map.y == pawn.y + 1 || target_cell.position_on_map.y == pawn.y - 1) && target_cell.position_on_map.x == pawn.x)) {
+		if (((target_cell.position_on_map.x == pawn.x + 1 || target_cell.position_on_map.x == pawn.x - 1) 
+					&& target_cell.position_on_map.y == pawn.y) 
+				|| ((target_cell.position_on_map.y == pawn.y + 1 || target_cell.position_on_map.y == pawn.y - 1) 
+					&& target_cell.position_on_map.x == pawn.x)) {
 
 			//std::cerr << "Human: Move to x = " << move_to.x << ", y = " << move_to.y << '\n';
 
@@ -146,17 +148,17 @@ void Board::AiMove() {
 	bool is_advance;
 	if (non_blocked.size() > 0) {
 		is_advance = true;
-		std::cerr << "Advanced non_blocked.size() = " << non_blocked.size() << '\n';
+		//std::cerr << "Advanced non_blocked.size() = " << non_blocked.size() << '\n';
 	}
 	else {
 		is_advance = false;
 		non_blocked = GetNonBlockedPawnsForBypass(black_pawns);
-		std::cerr << "Bypassed non_blocked.size() = " << non_blocked.size() << '\n';
+		//std::cerr << "Bypassed non_blocked.size() = " << non_blocked.size() << '\n';
 	}
 
 	if (non_blocked.size() == 0) {
 		is_game_over = true;
-		std::cerr << "Game over! No possible move." << std::endl;
+		//std::cerr << "Game over! No possible move." << std::endl;
 		return;
 	}
 
@@ -182,14 +184,15 @@ void Board::AiMove() {
 	const Vec2 last_pos = black_pawns[index].pos;
 
 	std::cerr << "Pawn move X = " << black_pawns[index].pos.x
-						<< " Y = " << black_pawns[index].pos.y << " --> ";
+				<< " Y = " << black_pawns[index].pos.y << " --> ";
 	// двигаем позицию в векторе позиций черных пешек
 	if (move == Move::RIGHT) black_pawns[index].pos.x++;
 	else if (move == Move::DOWN) black_pawns[index].pos.y--;
 	else if (move == Move::LEFT) black_pawns[index].pos.x--;
 	else if (move == Move::UP) black_pawns[index].pos.y++;
 	std::cerr << "X = " << black_pawns[index].pos.x
-						<< " Y = " << black_pawns[index].pos.y  << "\n===========================" << std::endl;
+				<< " Y = " << black_pawns[index].pos.y  
+				<< "\n===========================" << std::endl;
 
 	// запоминаем новую позицию для спрайта, относительно новой клетки
 	const Vec2 new_pos = black_pawns[index].pos;
@@ -247,6 +250,7 @@ void Board::SetPawnsFlags(std::vector<Pawn>& pawns) {
 			if (board[forward_x][pawn.pos.y].status != CellStatus::FREE) pawn.is_move_right = false;
 		}
 		else pawn.is_move_right = false;
+
 		if (forward_y >= 0) {
 			if (board[pawn.pos.x][forward_y].status != CellStatus::FREE) pawn.is_move_down = false;
 		}
@@ -254,7 +258,7 @@ void Board::SetPawnsFlags(std::vector<Pawn>& pawns) {
 		// Вторая стадия проверки возможности хода (посложнее)
 		// проверка крайних линий (левый нижний угол, 2 ряда)
 		// если в крайней линии уже собралось 3 черных пешки, значит туда ходить не надо
-		// char - идентефикатор оси, pair.first - это линии по краю, pair.second - это вторая от края линия
+		// char - идентификатор оси, pair.first - это линии по краю, pair.second - это вторая от края линия
 		std::unordered_map<char, std::pair<int, int>> count_black = CheckRedZones(CellStatus::BLACK);
 		std::unordered_map<char, std::pair<int, int>> count_white = CheckRedZones(CellStatus::WHITE);
 		const int END_LINE_X = 7;
@@ -264,17 +268,18 @@ void Board::SetPawnsFlags(std::vector<Pawn>& pawns) {
 
 		// проверка заполненности крайних линий
 		const int MAX_PAWNS_IN_LINE = 3;
-		if ((forward_x == END_LINE_X && count_black['y'].first == MAX_PAWNS_IN_LINE && count_white['x'].first == 0) ||
-				(forward_x == PRE_END_LINE_X && count_black['y'].second == MAX_PAWNS_IN_LINE && count_white['x'].second == 0)) {
+		if ((forward_x == END_LINE_X && count_black['y'].first == MAX_PAWNS_IN_LINE && count_white['x'].first == 0) 
+				|| (forward_x == PRE_END_LINE_X && count_black['y'].second == MAX_PAWNS_IN_LINE && count_white['x'].second == 0)) {
 			pawn.is_move_right = false;
 		}
-		if ((forward_y == END_LINE_Y && count_black['x'].first == MAX_PAWNS_IN_LINE && count_white['y'].first == 0) ||
-				(forward_y == PRE_END_LINE_Y && count_black['x'].second == MAX_PAWNS_IN_LINE && count_white['y'].second == 0)) {
+		if ((forward_y == END_LINE_Y && count_black['x'].first == MAX_PAWNS_IN_LINE && count_white['y'].first == 0) 
+				|| (forward_y == PRE_END_LINE_Y && count_black['x'].second == MAX_PAWNS_IN_LINE && count_white['y'].second == 0)) {
 			pawn.is_move_down = false;
 		}
+
 		// Третья стадия:
 		// проверка на плохую позицию
-		// запоминаем плохую позицию
+		// (запоминаем плохую позицию)
 
 		// Если режим обхода и освободилась диагональная (вправо-вниз) клетка, сбрасываем флаг обхода
 		if (pawn.is_bypass) {
@@ -347,7 +352,7 @@ std::vector<size_t> Board::GetNonBlockedPawnsForBypass(const std::vector<Board::
 		for (int y = 0; y < BOARD_SIZE; ++y) {
 			for (int x = 0; x < BOARD_SIZE; ++x) {
 				const Cell& cell = board[x][y];
-				// исключаем всех, кто уже "дома" и тех, кто в конце главного цикла попал в tmp,
+				// исключаем всех, кто уже "дома" и тех, кто в конце предыдущего главного цикла попал в tmp,
 				// но оказался не годным для хода
 				if (x < 5 || y > 2) {
 					if (cell.status == CellStatus::BLACK) {
@@ -355,8 +360,8 @@ std::vector<size_t> Board::GetNonBlockedPawnsForBypass(const std::vector<Board::
 						else {
 							bool is_good = true;
 							for (const auto it : tmp) {
-								if (cell.position_on_map.x == it.first.position_on_map.x &&
-										cell.position_on_map.y == it.first.position_on_map.y) is_good = false;
+								if (cell.position_on_map.x == it.first.position_on_map.x 
+										&& cell.position_on_map.y == it.first.position_on_map.y) is_good = false;
 								else continue;
 							}
 							// если не совпала ни с одним из tmp пушим в cells_whith_black_pawn
@@ -374,7 +379,7 @@ std::vector<size_t> Board::GetNonBlockedPawnsForBypass(const std::vector<Board::
 		}
 		cerr << "Bypass step 2 sorting by y:" << endl;
 		if (cells_whith_black_pawn.size() > 2) {
-			// сортируем по min_y и берем первый элемент в массив tmp
+			// сортируем по min_y 
 			std::stable_sort(begin(cells_whith_black_pawn), end(cells_whith_black_pawn),
 											 [](const Cell& lhs, const Cell& rhs) {
 				return lhs.position_on_map.y < rhs.position_on_map.y;
@@ -383,10 +388,12 @@ std::vector<size_t> Board::GetNonBlockedPawnsForBypass(const std::vector<Board::
 			for (const auto& it : cells_whith_black_pawn) {
 				cerr << 'x' << it.position_on_map.x << ", y" << it.position_on_map.y << endl;
 			}
-			cerr << "Bypass step 3 sorting by x:" << endl;
+
+			// и берем первый элемент в массив tmp
 			tmp.push_back(std::make_pair(cells_whith_black_pawn.front(), Move::BLOCKED));
 
-			// теперь сортируем по max_x и снова берем первый элемент
+			// теперь сортируем по max_x 
+			cerr << "Bypass step 3 sorting by x:" << endl;
 			std::stable_sort(begin(cells_whith_black_pawn), end(cells_whith_black_pawn),
 											 [](const Cell& lhs, const Cell& rhs) {
 				return lhs.position_on_map.x > rhs.position_on_map.x;
@@ -396,11 +403,12 @@ std::vector<size_t> Board::GetNonBlockedPawnsForBypass(const std::vector<Board::
 				cerr << 'x' << it.position_on_map.x << ", y" << it.position_on_map.y << endl;
 			}
 		}
+		// и снова берем первый элемент
 		if (cells_whith_black_pawn.size() > 0) {
 			if (cells_whith_black_pawn.size() > 2) tmp.push_back(std::make_pair(cells_whith_black_pawn.front(), Move::BLOCKED));
 			else tmp.push_back(std::make_pair(cells_whith_black_pawn.back(), Move::BLOCKED));
 		}
-			cerr << "tmp: " << endl;
+		cerr << "tmp: " << endl;
 		for (const auto& it : tmp) {
 			cerr << 'x' << it.first.position_on_map.x << ", y" << it.first.position_on_map.y << endl;
 		}
@@ -410,10 +418,11 @@ std::vector<size_t> Board::GetNonBlockedPawnsForBypass(const std::vector<Board::
 		for (auto& it : tmp) {
 			// ищем возможность обхода
 			it.second = GetMoveForBypass(it.first.position_on_map);
-			std::string move = "BLOCKED";
-			if (it.second == Move::UP) move = "UP";
-			else if (it.second == Move::LEFT) move = "LEFT";
-			cerr << "Pawn x" << it.first.position_on_map.x << ", y" << it.first.position_on_map.y << " move == " << move << endl;
+			//std::string move = "BLOCKED";
+			//if (it.second == Move::UP) move = "UP";
+			//else if (it.second == Move::LEFT) move = "LEFT";
+			//cerr << "Pawn x" << it.first.position_on_map.x << ", y" << it.first.position_on_map.y << " move == " << move << endl;
+			
 			// если текущая пешка годная, находим по координатам клетки ее индекс в std::vector<Pawn> black_pawns
 			// чтобы вернуть результат
 			if (it.second != Move::BLOCKED) {
